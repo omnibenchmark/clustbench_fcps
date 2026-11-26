@@ -22,7 +22,7 @@ references:
     doi: "10.1016/j.softx.2022.101270"
     url: "https://clustering-benchmarks.gagolewski.com"
 
-  - type: dataset
+  - type: data
     authors:
       - family-names: "Gagolewski"
         given-names: "Marek"
@@ -45,3 +45,75 @@ references:
     pages: "8-23"
     year: 2016
     doi: "10.1016/j.ins.2016.05.003"
+
+  # The libraries this module calls, with the versions its environment pins
+  # where a package rather than a paper is cited.
+
+  - type: article
+    authors:
+      - {family-names: "Thrun", given-names: "Michael C."}
+      - {family-names: "Stier", given-names: "Quirin"}
+    title: "Fundamental clustering algorithms suite"
+    journal: "SoftwareX"
+    volume: "13"
+    start: "100642"
+    year: 2021
+    doi: "10.1016/j.softx.2020.100642"
+    notes: "R package FCPS 1.3.4, which every FCPS_* method calls."
+
+  - type: software
+    authors:
+      - {family-names: "Maechler", given-names: "Martin"}
+      - {family-names: "Rousseeuw", given-names: "Peter"}
+      - {family-names: "Struyf", given-names: "Anja"}
+      - {family-names: "Hubert", given-names: "Mia"}
+      - {family-names: "Hornik", given-names: "Kurt"}
+    title: "cluster: Cluster Analysis Basics and Extensions"
+    version: "2.1.8"
+    year: 2024
+    url: "https://CRAN.R-project.org/package=cluster"
+    notes: "FCPS_Diana (diana), FCPS_Fanny (fanny), FCPS_Clara (clara), FCPS_PAM (pam)."
+
+  - type: software
+    authors:
+      - {family-names: "Bien", given-names: "Jacob"}
+      - {family-names: "Tibshirani", given-names: "Robert"}
+    title: "protoclust: Hierarchical Clustering with Prototypes"
+    version: "1.6.4"
+    year: 2022
+    url: "https://CRAN.R-project.org/package=protoclust"
+    notes: "FCPS_Minimax (minimax linkage)."
+
+  - type: software
+    authors:
+      - {family-names: "Rizzo", given-names: "Maria"}
+      - {family-names: "Székely", given-names: "Gábor"}
+    title: "energy: E-Statistics: Multivariate Inference via the Energy of Data"
+    version: "1.7-12"
+    year: 2024
+    url: "https://CRAN.R-project.org/package=energy"
+    notes: "FCPS_MinEnergy (energy.hclust)."
+
+  - type: article
+    authors:
+      - {family-names: "Hahsler", given-names: "Michael"}
+      - {family-names: "Piekenbrock", given-names: "Matthew"}
+      - {family-names: "Doran", given-names: "Derek"}
+    title: "dbscan: Fast density-based clustering with R"
+    journal: "Journal of Statistical Software"
+    volume: "91"
+    issue: "1"
+    start: "1"
+    end: "30"
+    year: 2019
+    doi: "10.18637/jss.v091.i01"
+    notes: "FCPS_HDBSCAN_2, FCPS_HDBSCAN_4, FCPS_HDBSCAN_8 (R package dbscan 1.2.2, hdbscan)."
+
+  - type: software
+    authors:
+      - {family-names: "Dimitriadou", given-names: "Evgenia"}
+    title: "cclust: Convex Clustering Methods and Clustering Indexes"
+    version: "0.6-26"
+    year: 2023
+    url: "https://CRAN.R-project.org/package=cclust"
+    notes: "FCPS_Hardcl (hard competitive learning), FCPS_Softcl (neural gas)."
