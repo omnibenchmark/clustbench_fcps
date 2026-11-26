@@ -13,10 +13,10 @@ library(FCPS)
 parser <- ArgumentParser(description="FCPS caller")
 
 
-parser$add_argument('--data.matrix',
+parser$add_argument('--data_matrix',
                     type="character",
                     help='gz-compressed textfile containing the comma-separated data to be clustered.')
-parser$add_argument('--data.true_labels',
+parser$add_argument('--data_true_labels',
                     type="character",
                     help='gz-compressed textfile with the true labels; used to select a range of ks.')
 parser$add_argument('--seed',
@@ -24,12 +24,14 @@ parser$add_argument('--seed',
                     help='Random seed',
                     default = 819797,
                     dest = 'seed')
-parser$add_argument("--output_dir", "-o", dest="output_dir", type="character",
-                    help="output directory where files will be saved", default=getwd())
-parser$add_argument("--name", "-n", dest="name", type="character", help="name of the dataset")
+parser$add_argument("--output", action="append", default=list(),
+                    help="id=PATH, one per output the stage declares (api 0.8.0)")
 parser$add_argument("--method", "-m", dest="method", type="character", help="method")
 
-args <- parser$parse_args()
+## ob still passes --output_dir and --name until api 0.10; they are ignored.
+args <- parser$parse_known_args()[[1]]
+kv <- regmatches(unlist(args$output), regexpr("=", unlist(args$output)), invert = TRUE)
+outputs <- setNames(sapply(kv, `[`, 2), sapply(kv, `[`, 1))
 
 
 
@@ -138,7 +140,7 @@ do_fcps <- function(data, Ks, method, seed) {
     return(do.call('cbind.data.frame', res))
 }
 
-truth <- load_labels(args[['data.true_labels']])
+truth <- load_labels(args[['data_true_labels']])
 
 k <- max(truth) # true number of clusters
 Ks <- c(k-2, k-1, k, k+1, k+2) # ks tested, including the true number
@@ -150,10 +152,10 @@ Ks[Ks < 2] <- 2 ## but we never run k < 2; those are replaced by (extra) k=2 run
 cat('refined Ks grid:  ', Ks, '\n')
 
 
-res <- do_fcps(data = load_dataset(args[['data.matrix']]), method = args[['method']], Ks = Ks, seed = args$seed)
+res <- do_fcps(data = load_dataset(args[['data_matrix']]), method = args[['method']], Ks = Ks, seed = args$seed)
 
 colnames(res) <- paste0('k=', Ks)
     
-gz <- gzfile(file.path(args[['output_dir']], paste0(args[['name']], "_ks_range.labels.gz")), "w")
+gz <- gzfile(outputs[['clustering_predicted_ks_range']], "w")
 write.table(file = gz, res, col.names = TRUE, row.names = FALSE, sep = ",")
 close(gz)
